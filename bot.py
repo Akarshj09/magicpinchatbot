@@ -53,6 +53,15 @@ class ReplyModel(BaseModel):
     received_at: Optional[str] = None
     turn_number: int = 1
 
+@app.get("/")
+async def root():
+    return {
+        "status": "ok",
+        "service": "Vera AI Assistant Bot",
+        "healthz": "/v1/healthz",
+        "metadata": "/v1/metadata"
+    }
+
 @app.get("/v1/healthz")
 async def healthz():
     return {
@@ -60,6 +69,7 @@ async def healthz():
         "uptime_seconds": _state_mgr.get_uptime_seconds(),
         "contexts_loaded": _state_mgr.get_context_counts()
     }
+
 
 @app.get("/v1/metadata")
 async def metadata():
